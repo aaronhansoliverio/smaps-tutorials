@@ -45,7 +45,7 @@ export const modules = [
         title: 'Details',
         description:
           'Explore the detailed view options for classroom and student data, including how to drill down into specific records.',
-        driveId: '1gguoA8gMD7-e9EzF3h9YBolnAqI0AVzv',
+        driveId: '1OwF2Ua9dBp4uPvDHPqr6yNxFM9vk-1pq',
         duration: '6:00',
       },
     ],
@@ -67,7 +67,7 @@ export const modules = [
         title: 'Enter Grades (ECR)',
         description:
           'Step-by-step guide on entering student grades using the Electronic Class Record (ECR) feature in SMAPS-SIS.',
-        driveId: '13h0lqBDQw-4RB_DKhXRtVsT2vl-egLpk',
+        driveId: '1gguoA8gMD7-e9EzF3h9YBolnAqI0AVzv',
         duration: '8:00',
       },
       {
@@ -76,7 +76,7 @@ export const modules = [
         title: 'View Grade Summary',
         description:
           'Learn how to access and interpret grade summary reports for your class, and understand how grades are calculated.',
-        driveId: '1FQdtE7RBOeEIVGJAe34FAxuUtZ9z_sXo',
+        driveId: '13h0lqBDQw-4RB_DKhXRtVsT2vl-egLpk',
         duration: '5:30',
       },
     ],
@@ -98,7 +98,7 @@ export const modules = [
         title: 'Attendance',
         description:
           'Learn how to take and record daily student attendance, view attendance history, and generate attendance reports.',
-        driveId: '1hEyvOAiABOSmXmrZf_OtkdMpLnRo9Vml',
+        driveId: '1FQdtE7RBOeEIVGJAe34FAxuUtZ9z_sXo',
         duration: '7:00',
       },
       {
@@ -107,7 +107,7 @@ export const modules = [
         title: 'Class Schedule',
         description:
           'Navigate your class schedule within SMAPS-SIS, understand how to view daily and weekly timetables.',
-        driveId: '1OwF2Ua9dBp4uPvDHPqr6yNxFM9vk-1pq',
+        driveId: '1hEyvOAiABOSmXmrZf_OtkdMpLnRo9Vml',
         duration: '4:00',
       },
     ],
