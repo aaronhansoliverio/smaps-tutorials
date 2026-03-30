@@ -8,7 +8,7 @@ const BANNER_URL =
 
 export default function TeacherDashboard() {
   const navigate = useNavigate()
-  const [openModules, setOpenModules] = useState([1]) // first module open by default
+  const [openModules, setOpenModules] = useState([1])
   const [completedVideos, setCompletedVideos] = useState(() => {
     const saved = localStorage.getItem('smaps_completed_videos')
     return saved ? JSON.parse(saved) : []
@@ -30,7 +30,7 @@ export default function TeacherDashboard() {
       <Navbar title="SMAPS-SIS Teacher Tutorials" showBack backTo="/" backLabel="Home" />
 
       {/* ── Course Hero ── */}
-      <div className="bg-gradient-to-r from-blue-950 to-blue-800 text-white">
+      <div className="bg-gradient-to-r from-red-950 to-red-800 text-white">
         {/* Banner strip */}
         {!bannerError && (
           <div className="h-28 md:h-40 overflow-hidden opacity-30">
@@ -45,21 +45,21 @@ export default function TeacherDashboard() {
 
         <div className="max-w-5xl mx-auto px-4 py-6 -mt-2">
           <div className="flex items-start gap-4">
-            <div className="bg-amber-400 text-blue-900 rounded-2xl p-3 text-3xl shadow-lg shrink-0 select-none">
+            <div className="bg-yellow-400 text-red-900 rounded-2xl p-3 text-3xl shadow-lg shrink-0 select-none">
               📚
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-amber-400 text-xs font-bold uppercase tracking-widest mb-1">
+              <p className="text-yellow-400 text-xs font-bold uppercase tracking-widest mb-1">
                 St. Michael the Archangel Parochial School
               </p>
               <h1 className="text-xl md:text-3xl font-extrabold leading-tight">
                 SMAPS-SIS Teacher Tutorials
               </h1>
-              <p className="text-blue-200 mt-2 text-sm leading-relaxed max-w-2xl">
+              <p className="text-red-200 mt-2 text-sm leading-relaxed max-w-2xl">
                 Complete video tutorial series for teachers. Learn how to manage your classroom,
                 enter grades, record attendance, and more — at your own pace.
               </p>
-              <div className="flex flex-wrap gap-3 mt-3 text-xs text-blue-300">
+              <div className="flex flex-wrap gap-3 mt-3 text-xs text-red-300">
                 <span>📹 {totalVideos} videos</span>
                 <span>📦 {modules.length} modules</span>
                 <span>🕐 Self-paced</span>
@@ -68,20 +68,20 @@ export default function TeacherDashboard() {
           </div>
 
           {/* Overall Progress */}
-          <div className="mt-6 bg-blue-900/50 rounded-2xl p-4 border border-blue-700/40">
+          <div className="mt-6 bg-red-900/50 rounded-2xl p-4 border border-red-700/40">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-blue-200 text-sm font-medium">Overall Progress</span>
+              <span className="text-red-200 text-sm font-medium">Overall Progress</span>
               <span className="text-white text-sm font-bold">
                 {completedCount} / {totalVideos} videos
               </span>
             </div>
-            <div className="w-full bg-blue-700/40 rounded-full h-3">
+            <div className="w-full bg-red-950/60 rounded-full h-3">
               <div
-                className="bg-amber-400 h-3 rounded-full transition-all duration-700"
+                className="bg-yellow-400 h-3 rounded-full transition-all duration-700"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <p className="text-blue-400 text-xs mt-2">{progressPercent}% complete</p>
+            <p className="text-red-300 text-xs mt-2">{progressPercent}% complete</p>
           </div>
         </div>
       </div>
@@ -119,7 +119,7 @@ export default function TeacherDashboard() {
 
                 <div className="flex items-center gap-2 shrink-0">
                   {allDone && (
-                    <span className="bg-green-400 text-green-900 text-xs font-bold px-2 py-0.5 rounded-full">
+                    <span className="bg-yellow-400 text-red-900 text-xs font-bold px-2 py-0.5 rounded-full">
                       ✓ Done
                     </span>
                   )}
@@ -143,7 +143,7 @@ export default function TeacherDashboard() {
               {modulePct > 0 && (
                 <div className="h-1 bg-gray-200">
                   <div
-                    className="bg-amber-400 h-1 transition-all duration-700"
+                    className="bg-yellow-400 h-1 transition-all duration-700"
                     style={{ width: `${modulePct}%` }}
                   />
                 </div>
@@ -165,7 +165,7 @@ export default function TeacherDashboard() {
                           className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-sm font-bold transition-all duration-200 ${
                             done
                               ? 'bg-green-500 text-white'
-                              : 'bg-white border-2 border-gray-300 text-gray-500 group-hover:border-blue-400 group-hover:text-blue-600'
+                              : 'bg-white border-2 border-gray-300 text-gray-500 group-hover:border-red-400 group-hover:text-red-600'
                           }`}
                         >
                           {done ? '✓' : idx + 1}
@@ -177,7 +177,7 @@ export default function TeacherDashboard() {
                             className={`font-semibold text-sm md:text-base transition-colors duration-200 ${
                               done
                                 ? 'text-green-700'
-                                : 'text-gray-800 group-hover:text-blue-800'
+                                : 'text-gray-800 group-hover:text-red-800'
                             }`}
                           >
                             {video.title}
@@ -190,7 +190,7 @@ export default function TeacherDashboard() {
                         {/* Duration + play button */}
                         <div className="flex items-center gap-3 shrink-0">
                           <span className="text-gray-400 text-xs hidden sm:block">{video.duration}</span>
-                          <div className="w-9 h-9 bg-blue-900 text-white rounded-full flex items-center justify-center text-xs group-hover:bg-blue-700 group-hover:scale-110 transition-all duration-200 shadow">
+                          <div className="w-9 h-9 bg-red-800 text-white rounded-full flex items-center justify-center text-xs group-hover:bg-red-700 group-hover:scale-110 transition-all duration-200 shadow">
                             ▶
                           </div>
                         </div>

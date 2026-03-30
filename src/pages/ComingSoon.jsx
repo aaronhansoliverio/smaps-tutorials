@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 const roleConfig = {
   Admin: {
     icon: '👨‍💼',
-    gradient: 'from-indigo-950 via-indigo-900 to-indigo-800',
+    gradient: 'from-red-950 via-red-900 to-red-800',
     features: [
       'System configuration tutorials',
       'User management guides',
@@ -13,9 +13,9 @@ const roleConfig = {
   },
   Parent: {
     icon: '👨‍👩‍👧',
-    gradient: 'from-teal-950 via-teal-900 to-teal-800',
+    gradient: 'from-red-950 via-rose-900 to-red-800',
     features: [
-      'How to view your child\'s grades',
+      "How to view your child's grades",
       'Checking attendance records',
       'Accessing class schedules',
       'Updating contact information',
@@ -27,7 +27,7 @@ export default function ComingSoon({ role }) {
   const navigate = useNavigate()
   const config = roleConfig[role] ?? {
     icon: '🚧',
-    gradient: 'from-gray-900 to-gray-800',
+    gradient: 'from-red-950 to-red-800',
     features: [],
   }
 
@@ -43,7 +43,7 @@ export default function ComingSoon({ role }) {
         <h1 className="text-3xl font-extrabold text-gray-800 mb-2">{role} Portal</h1>
 
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 bg-amber-100 text-amber-700 rounded-full px-4 py-1.5 font-semibold text-sm mb-5">
+        <div className="inline-flex items-center gap-2 bg-yellow-100 text-red-700 rounded-full px-4 py-1.5 font-semibold text-sm mb-5">
           <span>🚧</span> Coming Soon
         </div>
 
@@ -62,7 +62,7 @@ export default function ComingSoon({ role }) {
             <ul className="space-y-2">
               {config.features.map((f) => (
                 <li key={f} className="flex items-start gap-2 text-sm text-gray-600">
-                  <span className="text-amber-500 mt-0.5 shrink-0">✦</span>
+                  <span className="text-yellow-500 mt-0.5 shrink-0">✦</span>
                   {f}
                 </li>
               ))}
@@ -72,7 +72,7 @@ export default function ComingSoon({ role }) {
 
         <button
           onClick={() => navigate('/')}
-          className="w-full bg-blue-900 text-white font-semibold py-3 rounded-xl hover:bg-blue-800 transition-colors"
+          className="w-full bg-red-800 text-white font-semibold py-3 rounded-xl hover:bg-red-700 transition-colors"
         >
           ← Back to Home
         </button>

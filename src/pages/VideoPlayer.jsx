@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { allVideos, modules, getVideoById } from '../data/courseData'
 import Navbar from '../components/Navbar'
@@ -19,9 +19,6 @@ export default function VideoPlayer() {
   const isCompleted = completedVideos.includes(videoId)
   const currentModule = modules.find((m) => m.id === video?.moduleId)
 
-  // Auto-mark as complete on load (optional — remove if you prefer manual only)
-  // useEffect(() => { /* could auto-mark here */ }, [videoId])
-
   const toggleComplete = () => {
     const updated = isCompleted
       ? completedVideos.filter((id) => id !== videoId)
@@ -39,7 +36,7 @@ export default function VideoPlayer() {
             <p className="text-gray-400 text-lg mb-4">This video could not be found.</p>
             <button
               onClick={() => navigate('/teacher')}
-              className="text-amber-400 hover:underline font-medium"
+              className="text-yellow-400 hover:underline font-medium"
             >
               ← Back to Course
             </button>
@@ -75,17 +72,17 @@ export default function VideoPlayer() {
                     <p className="text-xl font-bold mb-1">{video.title}</p>
                     <p className="text-gray-400 text-sm max-w-md mb-5">
                       Video not configured yet. Open{' '}
-                      <code className="bg-gray-700 px-1.5 py-0.5 rounded text-amber-400 font-mono text-xs">
+                      <code className="bg-gray-700 px-1.5 py-0.5 rounded text-yellow-400 font-mono text-xs">
                         src/data/courseData.js
                       </code>{' '}
                       and replace the{' '}
-                      <code className="bg-gray-700 px-1.5 py-0.5 rounded text-amber-400 font-mono text-xs">
+                      <code className="bg-gray-700 px-1.5 py-0.5 rounded text-yellow-400 font-mono text-xs">
                         driveId
                       </code>{' '}
                       for this video with the Google Drive file ID.
                     </p>
                     <div className="bg-gray-700/60 rounded-xl p-4 text-left text-sm max-w-sm w-full">
-                      <p className="text-amber-400 font-semibold text-xs uppercase tracking-wider mb-2">
+                      <p className="text-yellow-400 font-semibold text-xs uppercase tracking-wider mb-2">
                         How to get the file ID
                       </p>
                       <ol className="text-gray-300 text-xs space-y-1 list-decimal list-inside">
@@ -94,8 +91,8 @@ export default function VideoPlayer() {
                         <li>Set access to "Anyone with the link"</li>
                         <li>
                           Copy the ID between{' '}
-                          <code className="text-amber-400">/d/</code> and{' '}
-                          <code className="text-amber-400">/view</code>
+                          <code className="text-yellow-400">/d/</code> and{' '}
+                          <code className="text-yellow-400">/view</code>
                         </li>
                         <li>Paste it as the driveId value</li>
                       </ol>
@@ -118,7 +115,7 @@ export default function VideoPlayer() {
           <div className="bg-gray-900 border-b border-gray-700/60">
             <div className="max-w-5xl mx-auto px-4 py-4 flex flex-wrap items-start justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
+                <p className="text-yellow-400 text-xs font-semibold uppercase tracking-wider mb-1">
                   {currentModule?.title}
                 </p>
                 <h1 className="text-white text-lg md:text-2xl font-bold leading-tight">
@@ -131,7 +128,7 @@ export default function VideoPlayer() {
                 className={`shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-200 ${
                   isCompleted
                     ? 'bg-green-600 hover:bg-green-700 text-white'
-                    : 'bg-amber-400 hover:bg-amber-300 text-blue-900'
+                    : 'bg-yellow-400 hover:bg-yellow-300 text-red-900'
                 }`}
               >
                 <span>{isCompleted ? '✓' : '○'}</span>
@@ -154,7 +151,7 @@ export default function VideoPlayer() {
 
               <button
                 onClick={() => navigate('/teacher')}
-                className="px-4 py-2.5 bg-blue-900 hover:bg-blue-800 text-white rounded-xl transition-colors text-sm font-medium"
+                className="px-4 py-2.5 bg-red-800 hover:bg-red-700 text-white rounded-xl transition-colors text-sm font-medium"
               >
                 ☰ Modules
               </button>
@@ -162,7 +159,7 @@ export default function VideoPlayer() {
               <button
                 onClick={() => nextVideo && navigate(`/teacher/video/${nextVideo.id}`)}
                 disabled={!nextVideo}
-                className="flex items-center gap-2 px-4 py-2.5 bg-amber-400 hover:bg-amber-300 text-blue-900 rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-sm font-semibold"
+                className="flex items-center gap-2 px-4 py-2.5 bg-yellow-400 hover:bg-yellow-300 text-red-900 rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-sm font-semibold"
               >
                 <span className="hidden md:block truncate max-w-xs">{nextVideo?.title ?? 'Next'}</span>
                 <span className="md:hidden">Next</span> →
@@ -240,7 +237,7 @@ function SidebarContent({ currentVideoId, completedVideos, onSelect }) {
         {total > 0 && (
           <div className="w-full bg-gray-700 rounded-full h-1.5 mt-2">
             <div
-              className="bg-amber-400 h-1.5 rounded-full transition-all duration-500"
+              className="bg-yellow-400 h-1.5 rounded-full transition-all duration-500"
               style={{ width: `${Math.round((totalCompleted / total) * 100)}%` }}
             />
           </div>
@@ -290,7 +287,7 @@ function SidebarContent({ currentVideoId, completedVideos, onSelect }) {
                         onClick={() => onSelect(video.id)}
                         className={`w-full flex items-center gap-3 px-4 py-3 text-left text-xs border-l-2 transition-colors ${
                           active
-                            ? 'border-amber-400 bg-blue-900/40 text-white'
+                            ? 'border-yellow-400 bg-red-900/40 text-white'
                             : 'border-transparent hover:bg-gray-700/40 text-gray-300 hover:text-white'
                         }`}
                       >
@@ -299,7 +296,7 @@ function SidebarContent({ currentVideoId, completedVideos, onSelect }) {
                             isDone
                               ? 'bg-green-500 text-white'
                               : active
-                              ? 'bg-amber-400 text-blue-900'
+                              ? 'bg-yellow-400 text-red-900'
                               : 'bg-gray-600 text-gray-400'
                           }`}
                         >
@@ -307,7 +304,7 @@ function SidebarContent({ currentVideoId, completedVideos, onSelect }) {
                         </div>
                         <span className="flex-1 line-clamp-2 leading-snug">{video.title}</span>
                         {active && (
-                          <span className="text-amber-400 text-xs shrink-0 font-semibold">▶</span>
+                          <span className="text-yellow-400 text-xs shrink-0 font-semibold">▶</span>
                         )}
                       </button>
                     )

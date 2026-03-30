@@ -18,8 +18,8 @@ export default function HomePage() {
       cta: 'Get Started →',
       available: true,
       cardClass:
-        'bg-white border-2 border-transparent hover:border-amber-400 hover:shadow-2xl hover:-translate-y-1 text-gray-800',
-      ctaClass: 'text-amber-600 font-semibold',
+        'bg-white border-2 border-transparent hover:border-yellow-400 hover:shadow-2xl hover:-translate-y-1 text-gray-800',
+      ctaClass: 'text-red-700 font-semibold',
     },
     {
       key: 'admin',
@@ -29,8 +29,8 @@ export default function HomePage() {
       cta: 'Coming Soon 🔒',
       available: false,
       cardClass:
-        'bg-white/10 border-2 border-white/20 hover:border-amber-400/40 hover:shadow-xl hover:-translate-y-0.5 text-white',
-      ctaClass: 'text-amber-400/70',
+        'bg-white/10 border-2 border-white/20 hover:border-yellow-400/50 hover:shadow-xl hover:-translate-y-0.5 text-white',
+      ctaClass: 'text-yellow-400/70',
     },
     {
       key: 'parent',
@@ -40,8 +40,8 @@ export default function HomePage() {
       cta: 'Coming Soon 🔒',
       available: false,
       cardClass:
-        'bg-white/10 border-2 border-white/20 hover:border-amber-400/40 hover:shadow-xl hover:-translate-y-0.5 text-white',
-      ctaClass: 'text-amber-400/70',
+        'bg-white/10 border-2 border-white/20 hover:border-yellow-400/50 hover:shadow-xl hover:-translate-y-0.5 text-white',
+      ctaClass: 'text-yellow-400/70',
     },
   ]
 
@@ -54,35 +54,35 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-red-950 via-red-900 to-red-800 flex flex-col">
       {/* ── Header ── */}
       <header className="text-center pt-10 pb-4 px-4">
         <div className="flex items-center justify-center gap-3 mb-3">
-          <div className="w-14 h-14 bg-amber-400 rounded-full flex items-center justify-center text-blue-900 text-2xl shadow-lg select-none">
+          <div className="w-14 h-14 bg-yellow-400 rounded-full flex items-center justify-center text-red-900 text-2xl shadow-lg select-none font-bold">
             ✟
           </div>
         </div>
         <h1 className="text-3xl md:text-5xl font-extrabold text-white leading-tight tracking-tight">
           St. Michael the Archangel
         </h1>
-        <h2 className="text-xl md:text-2xl font-semibold text-amber-400 mt-1">
+        <h2 className="text-xl md:text-2xl font-semibold text-yellow-400 mt-1">
           Parochial School
         </h2>
-        <p className="text-blue-200 mt-3 text-base md:text-lg font-medium">
+        <p className="text-red-200 mt-3 text-base md:text-lg font-medium">
           SMAPS-SIS Tutorial Portal
         </p>
       </header>
 
       {/* ── Banner Image ── */}
       <div className="mx-auto w-full max-w-4xl px-4 mt-6">
-        <div className="rounded-2xl overflow-hidden shadow-2xl ring-4 ring-amber-400/20">
+        <div className="rounded-2xl overflow-hidden shadow-2xl ring-4 ring-yellow-400/30">
           {bannerError ? (
-            <div className="w-full h-52 md:h-72 bg-blue-800 flex flex-col items-center justify-center text-center p-8">
+            <div className="w-full h-52 md:h-72 bg-red-800 flex flex-col items-center justify-center text-center p-8">
               <div className="text-6xl mb-3 select-none">✟</div>
               <p className="text-white text-xl font-semibold">
                 St. Michael the Archangel Parochial School
               </p>
-              <p className="text-blue-200 mt-2 text-sm">Excellence in Catholic Education</p>
+              <p className="text-red-200 mt-2 text-sm">Excellence in Catholic Education</p>
             </div>
           ) : (
             <img
@@ -100,7 +100,7 @@ export default function HomePage() {
         <h3 className="text-white text-xl md:text-2xl font-bold">
           Welcome to the SIS Tutorial Portal
         </h3>
-        <p className="text-blue-200 mt-2 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+        <p className="text-red-200 mt-2 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
           Select your role below to access video tutorials and guides for the School Information
           System. Learn at your own pace, anytime.
         </p>
@@ -108,7 +108,7 @@ export default function HomePage() {
 
       {/* ── Role Cards ── */}
       <div className="flex-1 flex flex-col justify-center px-4 pb-12">
-        <p className="text-blue-400 text-xs font-semibold uppercase tracking-widest text-center mb-5">
+        <p className="text-red-300 text-xs font-semibold uppercase tracking-widest text-center mb-5">
           I am a…
         </p>
         <div className="max-w-3xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -120,7 +120,7 @@ export default function HomePage() {
             >
               <div className="text-4xl mb-3 select-none">{role.icon}</div>
               <h3 className="font-bold text-xl mb-1">{role.label}</h3>
-              <p className={`text-sm leading-relaxed mb-4 ${role.available ? 'text-gray-500' : 'text-blue-300'}`}>
+              <p className={`text-sm leading-relaxed mb-4 ${role.available ? 'text-gray-500' : 'text-red-200'}`}>
                 {role.description}
               </p>
               <p className={`text-sm ${role.ctaClass} group-hover:underline`}>{role.cta}</p>
@@ -140,10 +140,10 @@ export default function HomePage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="text-6xl mb-4 select-none">🚧</div>
-            <h3 className="text-2xl font-bold text-blue-900 mb-2">Coming Soon!</h3>
+            <h3 className="text-2xl font-bold text-red-900 mb-2">Coming Soon!</h3>
             <p className="text-gray-600 mb-1">
               The{' '}
-              <span className="font-semibold text-blue-800">
+              <span className="font-semibold text-red-800">
                 {showModal === 'admin' ? 'Admin' : 'Parent'}
               </span>{' '}
               portal is currently under development.
@@ -153,7 +153,7 @@ export default function HomePage() {
             </p>
             <button
               onClick={() => setShowModal(null)}
-              className="w-full bg-blue-900 text-white font-semibold py-3 rounded-xl hover:bg-blue-800 transition-colors"
+              className="w-full bg-red-800 text-white font-semibold py-3 rounded-xl hover:bg-red-700 transition-colors"
             >
               Got it!
             </button>
@@ -162,9 +162,9 @@ export default function HomePage() {
       )}
 
       {/* ── Footer ── */}
-      <footer className="text-center py-5 text-blue-500 text-xs">
+      <footer className="text-center py-5 text-red-400 text-xs">
         <p>© {new Date().getFullYear()} St. Michael the Archangel Parochial School</p>
-        <p className="mt-0.5 text-blue-600">SMAPS-SIS Tutorial Portal</p>
+        <p className="mt-0.5 text-red-500">SMAPS-SIS Tutorial Portal</p>
       </footer>
     </div>
   )

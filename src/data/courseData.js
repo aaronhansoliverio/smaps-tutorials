@@ -16,10 +16,10 @@ export const modules = [
     description:
       'Learn how to navigate and manage your classroom settings and student information in SMAPS-SIS.',
     icon: '🏫',
-    headerColor: 'bg-blue-900',
-    badgeColor: 'bg-blue-100 text-blue-800',
-    borderColor: 'border-blue-200',
-    bgColor: 'bg-blue-50',
+    headerColor: 'bg-red-800',
+    badgeColor: 'bg-yellow-100 text-red-800',
+    borderColor: 'border-red-200',
+    bgColor: 'bg-red-50',
     videos: [
       {
         id: 'm1v1',

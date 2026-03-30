@@ -6,7 +6,7 @@ export default function Navbar({ title, showBack, backTo, backLabel, dark = fals
   return (
     <nav
       className={`flex-shrink-0 flex items-center gap-3 px-4 py-3 shadow-md z-10 ${
-        dark ? 'bg-gray-900 border-b border-gray-700' : 'bg-blue-900'
+        dark ? 'bg-gray-900 border-b border-gray-700' : 'bg-red-800'
       }`}
     >
       {showBack && (
@@ -22,7 +22,7 @@ export default function Navbar({ title, showBack, backTo, backLabel, dark = fals
       )}
 
       <div className="flex-1 min-w-0">
-        <p className="text-amber-400 text-xs font-semibold uppercase tracking-widest hidden sm:block leading-none mb-0.5">
+        <p className="text-yellow-400 text-xs font-semibold uppercase tracking-widest hidden sm:block leading-none mb-0.5">
           SMAPS-SIS Tutorials
         </p>
         <h1 className="text-white font-bold text-sm md:text-base truncate leading-tight">{title}</h1>
@@ -42,7 +42,7 @@ export default function Navbar({ title, showBack, backTo, backLabel, dark = fals
       )}
 
       {/* School cross badge */}
-      <div className="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center text-blue-900 font-bold text-sm shrink-0 shadow-sm select-none">
+      <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-red-900 font-bold text-sm shrink-0 shadow-sm select-none">
         ✟
       </div>
     </nav>
