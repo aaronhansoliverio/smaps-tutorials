@@ -13,6 +13,9 @@ import { auth, db, googleProvider } from '../firebase'
 
 const AuthContext = createContext(null)
 
+// Super admin email — only this user can access user management panel
+const SUPERADMIN_EMAIL = (import.meta.env.VITE_SUPERADMIN_EMAIL || '').trim().toLowerCase()
+
 // Emails that are auto-assigned the "admin" role on first login.
 const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS || '')
   .split(',')
@@ -22,20 +25,25 @@ const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS || '')
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null)
   const [userRole, setUserRole]       = useState(null)  // 'admin' | 'teacher' | 'parent' | 'pending'
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false)  // Only for user management access
   const [loading, setLoading]         = useState(true)
 
   // Fetch (or create) the Firestore user document and return the role.
   async function syncUserDoc(firebaseUser) {
+    const userEmail = firebaseUser.email?.toLowerCase()
     const ref  = doc(db, 'users', firebaseUser.uid)
     const snap = await getDoc(ref)
+
+    const isSuperAdminUser = userEmail === SUPERADMIN_EMAIL
+    setIsSuperAdmin(isSuperAdminUser)
 
     if (snap.exists()) {
       return snap.data().role || 'pending'
     }
 
     // First-ever login: create the document.
-    const isAdmin = ADMIN_EMAILS.includes(firebaseUser.email?.toLowerCase())
-    const newRole = isAdmin ? 'admin' : 'pending'
+    const isAdmin = ADMIN_EMAILS.includes(userEmail)
+    const newRole = isAdmin ? 'admin' : isSuperAdminUser ? 'admin' : 'pending'
 
     await setDoc(ref, {
       uid:         firebaseUser.uid,
@@ -57,13 +65,16 @@ export function AuthProvider({ children }) {
           const role = await syncUserDoc(firebaseUser)
           setCurrentUser(firebaseUser)
           setUserRole(role)
+          setIsSuperAdmin(firebaseUser.email?.toLowerCase() === SUPERADMIN_EMAIL)
         } catch {
           setCurrentUser(firebaseUser)
           setUserRole('pending')
+          setIsSuperAdmin(false)
         }
       } else {
         setCurrentUser(null)
         setUserRole(null)
+        setIsSuperAdmin(false)
       }
       setLoading(false)
     })
@@ -98,6 +109,7 @@ export function AuthProvider({ children }) {
   const value = {
     currentUser,
     userRole,
+    isSuperAdmin,
     loading,
     loginWithGoogle,
     loginWithEmail,

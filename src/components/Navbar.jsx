@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext'
 
 export default function Navbar({ title, showBack, backTo, backLabel, dark = false, onMenuClick }) {
   const navigate = useNavigate()
-  const { currentUser, userRole, logout } = useAuth()
+  const { currentUser, userRole, isSuperAdmin, logout } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
 
   const handleLogout = async () => {
@@ -103,11 +103,11 @@ export default function Navbar({ title, showBack, backTo, backLabel, dark = fals
                   </span>
                 </div>
 
-                {/* Admin link */}
-                {userRole === 'admin' && (
+                {/* User Management — superadmin only */}
+                {isSuperAdmin && (
                   <button
                     onClick={() => { setMenuOpen(false); navigate('/admin') }}
-                    className="w-full flex items-center gap-2.5 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors text-left"
+                    className="w-full flex items-center gap-2.5 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors text-left border-b border-gray-100"
                   >
                     <span>🛡️</span>
                     <span>User Management</span>

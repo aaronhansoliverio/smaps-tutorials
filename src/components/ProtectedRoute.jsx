@@ -12,8 +12,8 @@ import { useAuth } from '../contexts/AuthContext'
  *   role not in allowedRoles → /  (home; user sees their own accessible cards)
  *   otherwise              → render children
  */
-export default function ProtectedRoute({ children, allowedRoles }) {
-  const { currentUser, userRole } = useAuth()
+export default function ProtectedRoute({ children, allowedRoles, requireSuperAdmin = false }) {
+  const { currentUser, userRole, isSuperAdmin } = useAuth()
 
   if (!currentUser) {
     return <Navigate to="/login" replace />
@@ -21,6 +21,10 @@ export default function ProtectedRoute({ children, allowedRoles }) {
 
   if (!userRole || userRole === 'pending') {
     return <Navigate to="/pending" replace />
+  }
+
+  if (requireSuperAdmin && !isSuperAdmin) {
+    return <Navigate to="/" replace />
   }
 
   if (!allowedRoles.includes(userRole)) {

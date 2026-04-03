@@ -6,15 +6,16 @@ const BANNER_URL =
   'https://scontent.filo1-1.fna.fbcdn.net/v/t39.30808-6/480198983_1091607002762482_8548530664698558169_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeHXS60QWgmzv58HH859Fuxid4MKaE9Zd3V3gwpoT1l3dfmjVy1XpPuCS1Ny1pbpJG9_BldH9oHpdBjiX60bzFw9&_nc_ohc=B9LXIKclRMsQ7kNvwGljNIo&_nc_oc=AdoUnt4sTaRn29dT7E2nDKEK89MODWEWCeJsYhsGs2eXND0Gf3vuy1FnN9M6rEQS4y0&_nc_zt=23&_nc_ht=scontent.filo1-1.fna&_nc_gid=ulT6Wpw4CgPaIkAIPrqnSw&_nc_ss=7a3a8&oh=00_Afznot7HBtSLNWceYPwC6ZJfpfTol9MoHhJNykHli4O9Qg&oe=69D045F8'
 
 // Which roles may access each section.
+// Note: admins are end-users who only access admin tutorials, not teacher/parent
 const ROLE_ACCESS = {
-  teacher: ['teacher', 'admin'],
-  parent:  ['parent',  'admin'],
+  teacher: ['teacher'],
+  parent:  ['parent'],
   admin:   ['admin'],
 }
 
 export default function HomePage() {
   const navigate = useNavigate()
-  const { currentUser, userRole, logout } = useAuth()
+  const { currentUser, userRole, isSuperAdmin, logout } = useAuth()
   const [bannerError, setBannerError] = useState(false)
 
   const canAccess = (key) =>
@@ -110,6 +111,15 @@ export default function HomePage() {
             >
               Sign out
             </button>
+            {isSuperAdmin && (
+              <button
+                onClick={() => navigate('/admin')}
+                className="text-yellow-300 hover:text-yellow-200 text-xs transition-colors font-semibold"
+                title="User Management"
+              >
+                🛡️ User Management
+              </button>
+            )}
           </div>
         )}
       </header>

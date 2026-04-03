@@ -63,11 +63,11 @@ function App() {
           }
         />
 
-        {/* ── Admin section ── */}
+        {/* ── Admin section — Super admin only ── */}
         <Route
           path="/admin"
           element={
-            <ProtectedRoute allowedRoles={['admin']}>
+            <ProtectedRoute allowedRoles={['admin']} requireSuperAdmin>
               <AdminPanel />
             </ProtectedRoute>
           }
