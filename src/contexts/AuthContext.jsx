@@ -15,8 +15,6 @@ const AuthContext = createContext(null)
 
 // Super admin email — only this user can access user management panel
 const SUPERADMIN_EMAIL = (import.meta.env.VITE_SUPERADMIN_EMAIL || '').trim().toLowerCase()
-console.log('🔐 VITE_SUPERADMIN_EMAIL raw:', import.meta.env.VITE_SUPERADMIN_EMAIL)
-console.log('🔐 SUPERADMIN_EMAIL processed:', SUPERADMIN_EMAIL)
 
 // Emails that are auto-assigned the "admin" role on first login.
 const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS || '')
@@ -37,10 +35,6 @@ export function AuthProvider({ children }) {
     const snap = await getDoc(ref)
 
     const isSuperAdminUser = userEmail === SUPERADMIN_EMAIL
-    console.log('🔐 Email comparison:')
-    console.log('  userEmail:', userEmail)
-    console.log('  SUPERADMIN_EMAIL:', SUPERADMIN_EMAIL)
-    console.log('  isSuperAdminUser:', isSuperAdminUser)
     setIsSuperAdmin(isSuperAdminUser)
 
     if (snap.exists()) {
