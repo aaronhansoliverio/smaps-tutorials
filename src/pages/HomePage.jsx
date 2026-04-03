@@ -156,6 +156,10 @@ export default function HomePage() {
             ? 'You have full access to all sections and user management.'
             : 'Your role determines which section you can access below.'}
         </p>
+        {/* DEBUG: Remove this after testing */}
+        <p className="text-yellow-300 text-xs mt-4">
+          Debug: isSuperAdmin={String(isSuperAdmin)}, userRole={userRole}
+        </p>
       </div>
 
       {/* ── Role Cards ── */}
