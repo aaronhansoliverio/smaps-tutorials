@@ -1,23 +1,37 @@
 import { useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { allVideos, modules, getVideoById } from '../data/courseData'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import {
+  allVideos, modules, getVideoById,
+  parentAllVideos, parentModules, getParentVideoById,
+} from '../data/courseData'
 import Navbar from '../components/Navbar'
 
 export default function VideoPlayer() {
   const { videoId } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  // Determine context from URL prefix
+  const isParent = location.pathname.startsWith('/parent')
+  const storageKey = isParent ? 'smaps_parent_completed_videos' : 'smaps_completed_videos'
+  const dashboardPath = isParent ? '/parent' : '/teacher'
+  const videoPath = isParent ? '/parent/video/' : '/teacher/video/'
+  const contextVideos = isParent ? parentAllVideos : allVideos
+  const contextModules = isParent ? parentModules : modules
+  const getById = isParent ? getParentVideoById : getVideoById
+
   const [completedVideos, setCompletedVideos] = useState(() => {
-    const saved = localStorage.getItem('smaps_completed_videos')
+    const saved = localStorage.getItem(storageKey)
     return saved ? JSON.parse(saved) : []
   })
 
-  const video = getVideoById(videoId)
-  const currentIndex = allVideos.findIndex((v) => v.id === videoId)
-  const prevVideo = currentIndex > 0 ? allVideos[currentIndex - 1] : null
-  const nextVideo = currentIndex < allVideos.length - 1 ? allVideos[currentIndex + 1] : null
+  const video = getById(videoId)
+  const currentIndex = contextVideos.findIndex((v) => v.id === videoId)
+  const prevVideo = currentIndex > 0 ? contextVideos[currentIndex - 1] : null
+  const nextVideo = currentIndex < contextVideos.length - 1 ? contextVideos[currentIndex + 1] : null
   const isCompleted = completedVideos.includes(videoId)
-  const currentModule = modules.find((m) => m.id === video?.moduleId)
+  const currentModule = contextModules.find((m) => m.id === video?.moduleId)
 
   const toggleComplete = () => {
     const updated = isCompleted
@@ -30,12 +44,12 @@ export default function VideoPlayer() {
   if (!video) {
     return (
       <div className="min-h-screen bg-gray-900 flex flex-col">
-        <Navbar title="Video Not Found" showBack backTo="/teacher" backLabel="Course" dark />
+        <Navbar title="Video Not Found" showBack backTo={dashboardPath} backLabel="Course" dark />
         <div className="flex-1 flex items-center justify-center text-center p-8">
           <div>
             <p className="text-gray-400 text-lg mb-4">This video could not be found.</p>
             <button
-              onClick={() => navigate('/teacher')}
+              onClick={() => navigate(dashboardPath)}
               className="text-yellow-400 hover:underline font-medium"
             >
               ← Back to Course
@@ -53,7 +67,7 @@ export default function VideoPlayer() {
       <Navbar
         title={video.title}
         showBack
-        backTo="/teacher"
+        backTo={dashboardPath}
         backLabel="Course"
         dark
         onMenuClick={() => setSidebarOpen((prev) => !prev)}
@@ -141,7 +155,7 @@ export default function VideoPlayer() {
           <div className="bg-gray-800 border-b border-gray-700/60">
             <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
               <button
-                onClick={() => prevVideo && navigate(`/teacher/video/${prevVideo.id}`)}
+                onClick={() => prevVideo && navigate(`${videoPath}${prevVideo.id}`)}
                 disabled={!prevVideo}
                 className="flex items-center gap-2 px-4 py-2.5 bg-gray-700 hover:bg-gray-600 text-white rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-sm font-medium"
               >
@@ -150,14 +164,14 @@ export default function VideoPlayer() {
               </button>
 
               <button
-                onClick={() => navigate('/teacher')}
+                onClick={() => navigate(dashboardPath)}
                 className="px-4 py-2.5 bg-red-800 hover:bg-red-700 text-white rounded-xl transition-colors text-sm font-medium"
               >
                 ☰ Modules
               </button>
 
               <button
-                onClick={() => nextVideo && navigate(`/teacher/video/${nextVideo.id}`)}
+                onClick={() => nextVideo && navigate(`${videoPath}${nextVideo.id}`)}
                 disabled={!nextVideo}
                 className="flex items-center gap-2 px-4 py-2.5 bg-yellow-400 hover:bg-yellow-300 text-red-900 rounded-xl transition-colors disabled:opacity-30 disabled:cursor-not-allowed text-sm font-semibold"
               >
@@ -175,7 +189,9 @@ export default function VideoPlayer() {
           <SidebarContent
             currentVideoId={videoId}
             completedVideos={completedVideos}
-            onSelect={(id) => navigate(`/teacher/video/${id}`)}
+            contextModules={contextModules}
+            contextVideos={contextVideos}
+            onSelect={(id) => navigate(`${videoPath}${id}`)}
           />
         </aside>
 
@@ -196,8 +212,10 @@ export default function VideoPlayer() {
               <SidebarContent
                 currentVideoId={videoId}
                 completedVideos={completedVideos}
+                contextModules={contextModules}
+                contextVideos={contextVideos}
                 onSelect={(id) => {
-                  navigate(`/teacher/video/${id}`)
+                  navigate(`${videoPath}${id}`)
                   setSidebarOpen(false)
                 }}
               />
@@ -212,14 +230,14 @@ export default function VideoPlayer() {
 /* ─────────────────────────────────────── */
 /*  Sidebar inner content (shared)         */
 /* ─────────────────────────────────────── */
-function SidebarContent({ currentVideoId, completedVideos, onSelect }) {
-  const currentVideo = allVideos.find((v) => v.id === currentVideoId)
+function SidebarContent({ currentVideoId, completedVideos, contextModules, contextVideos, onSelect }) {
+  const currentVideo = contextVideos.find((v) => v.id === currentVideoId)
   const [openModules, setOpenModules] = useState(() =>
-    currentVideo ? [currentVideo.moduleId] : [1]
+    currentVideo ? [currentVideo.moduleId] : [contextModules[0]?.id]
   )
 
   const totalCompleted = completedVideos.length
-  const total = allVideos.length
+  const total = contextVideos.length
 
   const toggle = (id) =>
     setOpenModules((prev) =>
@@ -246,7 +264,7 @@ function SidebarContent({ currentVideoId, completedVideos, onSelect }) {
 
       {/* Module list */}
       <div className="flex-1 overflow-y-auto">
-        {modules.map((module) => {
+        {contextModules.map((module) => {
           const isOpen = openModules.includes(module.id)
           const done = module.videos.filter((v) => completedVideos.includes(v.id)).length
 

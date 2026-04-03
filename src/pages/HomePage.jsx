@@ -17,6 +17,7 @@ export default function HomePage() {
       description: 'Access SMAPS-SIS teacher tutorials and step-by-step video guides.',
       cta: 'Get Started →',
       available: true,
+      path: '/teacher',
       cardClass:
         'bg-white border-2 border-transparent hover:border-yellow-400 hover:shadow-2xl hover:-translate-y-1 text-gray-800',
       ctaClass: 'text-red-700 font-semibold',
@@ -28,6 +29,7 @@ export default function HomePage() {
       description: 'Administrative staff portal and system management tutorials.',
       cta: 'Coming Soon 🔒',
       available: false,
+      path: null,
       cardClass:
         'bg-white/10 border-2 border-white/20 hover:border-yellow-400/50 hover:shadow-xl hover:-translate-y-0.5 text-white',
       ctaClass: 'text-yellow-400/70',
@@ -37,17 +39,18 @@ export default function HomePage() {
       label: 'Parent',
       icon: '👨‍👩‍👧',
       description: 'Parent portal guides, how-to videos, and enrollment tutorials.',
-      cta: 'Coming Soon 🔒',
-      available: false,
+      cta: 'Get Started →',
+      available: true,
+      path: '/parent',
       cardClass:
-        'bg-white/10 border-2 border-white/20 hover:border-yellow-400/50 hover:shadow-xl hover:-translate-y-0.5 text-white',
-      ctaClass: 'text-yellow-400/70',
+        'bg-white border-2 border-transparent hover:border-yellow-400 hover:shadow-2xl hover:-translate-y-1 text-gray-800',
+      ctaClass: 'text-red-700 font-semibold',
     },
   ]
 
   const handleSelect = (role) => {
     if (role.available) {
-      navigate('/teacher')
+      navigate(role.path)
     } else {
       setShowModal(role.key)
     }
@@ -162,7 +165,48 @@ export default function HomePage() {
       )}
 
       {/* ── Footer ── */}
-      <footer className="text-center py-5 text-red-400 text-xs">
+      <footer className="text-center pb-6 pt-4 text-red-400 text-xs">
+        {/* Social / External Links */}
+        <div className="flex items-center justify-center gap-6 mb-4">
+          {/* Facebook */}
+          <a
+            href="https://www.facebook.com/smapssmii"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="SMAPS Facebook Page"
+            className="group flex flex-col items-center gap-1.5 transition-transform duration-200 hover:scale-110"
+          >
+            <div className="w-11 h-11 bg-[#1877F2] rounded-full flex items-center justify-center shadow-lg group-hover:shadow-blue-400/40 group-hover:shadow-xl transition-shadow duration-200">
+              <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white" aria-hidden="true">
+                <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.413c0-3.025 1.792-4.697 4.532-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
+              </svg>
+            </div>
+            <span className="text-red-300 text-xs font-medium group-hover:text-white transition-colors duration-200">Facebook</span>
+          </a>
+
+          {/* SMAPS-SIS Portal */}
+          <a
+            href="https://smaps-sis.base44.app/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="SMAPS-SIS Student Portal"
+            className="group flex flex-col items-center gap-1.5 transition-transform duration-200 hover:scale-110"
+          >
+            <div className="w-11 h-11 rounded-full overflow-hidden shadow-lg ring-2 ring-yellow-400/40 group-hover:ring-yellow-400 group-hover:shadow-yellow-400/30 group-hover:shadow-xl transition-all duration-200 bg-white">
+              <img
+                src="https://scontent.filo1-1.fna.fbcdn.net/v/t39.30808-6/367997140_758570752732777_7988798035132123966_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeECzXPJVvSUKj-VPDJFqb0xFXpXWUz8k-hFeldZTPhT6JknlCvO5kH6hOvKDV-UOTg_FmovH_z1Nc2kPksMm_5C&_nc_ohc=fD3zVECT-9AQ7kNvwFH0K6J&_nc_oc=AdlL5I4TQDtpx4pSZ0kVm1vWVhTdIr4yoUrV56VLRJ80EVb1FS_kTvxwPsTNy4TpFgg&_nc_zt=23&_nc_ht=scontent.filo1-1.fna&_nc_gid=yF9fJGPf5i7EBzDJaqiWRiA&oh=00_AfAjMVJHGgDpPyWXqBM0r3lDRSAXIV5i6Hm5MJZQwnKfhA&oe=67F8CF78"
+                alt="SMAPS-SIS"
+                className="w-full h-full object-cover mix-blend-multiply"
+                onError={(e) => {
+                  e.target.style.display = 'none'
+                  e.target.parentElement.innerHTML = '<span class="w-full h-full flex items-center justify-center text-red-800 font-bold text-sm">SIS</span>'
+                }}
+              />
+            </div>
+            <span className="text-red-300 text-xs font-medium group-hover:text-white transition-colors duration-200">SIS Portal</span>
+          </a>
+        </div>
+
         <p>© {new Date().getFullYear()} St. Michael the Archangel Parochial School</p>
         <p className="mt-0.5 text-red-500">SMAPS-SIS Tutorial Portal</p>
       </footer>

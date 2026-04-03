@@ -144,3 +144,128 @@ export const allVideos = modules.flatMap((module) =>
 export const getVideoById = (id) => allVideos.find((v) => v.id === id)
 export const getModuleById = (id) => modules.find((m) => m.id === id)
 export const getTotalVideos = () => allVideos.length
+
+// ============================================================
+//  PARENT MODULES
+// ============================================================
+export const parentModules = [
+  {
+    id: 'p1',
+    title: 'Module 1: Getting Started',
+    description:
+      'Learn how to access the Parent Portal for the first time and navigate the dashboard.',
+    icon: '🏠',
+    headerColor: 'bg-red-800',
+    badgeColor: 'bg-yellow-100 text-red-800',
+    borderColor: 'border-red-200',
+    bgColor: 'bg-red-50',
+    videos: [
+      {
+        id: 'pm1v1',
+        moduleId: 'p1',
+        title: 'Accessing the Parent Portal',
+        description:
+          'Step-by-step guide on how to access the Parent Portal using your unique enrollment code. Covers first-time login, account setup, and troubleshooting access issues.',
+        driveId: '1IkuK517hhrUC2cNZBK6lSDZrmiwntxHJ',
+        duration: '5:00',
+      },
+      {
+        id: 'pm1v2',
+        moduleId: 'p1',
+        title: 'Understanding the Parent Dashboard',
+        description:
+          'Get a full overview of the Parent Dashboard — learn where to find key information, navigate the menu sections, and personalize your view.',
+        driveId: '1ZojhubGHbpf97DkHNdDxUOVdJTQIgkyQ',
+        duration: '4:30',
+      },
+    ],
+  },
+  {
+    id: 'p2',
+    title: 'Module 2: Academic Monitoring',
+    description:
+      'Monitor your child\'s academic performance, class schedule, and attendance records.',
+    icon: '📊',
+    headerColor: 'bg-blue-800',
+    badgeColor: 'bg-blue-100 text-blue-800',
+    borderColor: 'border-blue-200',
+    bgColor: 'bg-blue-50',
+    videos: [
+      {
+        id: 'pm2v1',
+        moduleId: 'p2',
+        title: 'View Grades',
+        description:
+          'Learn how to access and read your child\'s grade reports, understand the grading system, and monitor academic progress across all subjects.',
+        driveId: '1-qcAu7AcrOqC2hwXwH0M8PwfWlwR9SSH',
+        duration: '5:30',
+      },
+      {
+        id: 'pm2v2',
+        moduleId: 'p2',
+        title: 'View Class Schedule',
+        description:
+          'Navigate your child\'s class schedule — view daily and weekly timetables, subject assignments, and room information.',
+        driveId: '1DPdpm40nnfkaQbIHgopqYWPhumouxHm0',
+        duration: '3:30',
+      },
+      {
+        id: 'pm2v3',
+        moduleId: 'p2',
+        title: 'Attendance & Excuse Letters',
+        description:
+          'Check your child\'s attendance record and learn how to submit excuse letters for absences directly through the Parent Portal.',
+        driveId: '106dEqSC7aOEbyC45wbWe91cekjfYf7HY',
+        duration: '6:00',
+      },
+    ],
+  },
+  {
+    id: 'p3',
+    title: 'Module 3: Communication & Records',
+    description:
+      'Manage finances, communicate with teachers, and access important student documents.',
+    icon: '💬',
+    headerColor: 'bg-green-800',
+    badgeColor: 'bg-green-100 text-green-800',
+    borderColor: 'border-green-200',
+    bgColor: 'bg-green-50',
+    videos: [
+      {
+        id: 'pm3v1',
+        moduleId: 'p3',
+        title: "Managing Your Child's Finances",
+        description:
+          'View tuition fees, payment history, and outstanding balances. Learn how to track financial transactions and understand billing statements.',
+        driveId: '1_PK_0gM7j8gRXQpbPLzVK6gaSxCDKUDf',
+        duration: '5:00',
+      },
+      {
+        id: 'pm3v2',
+        moduleId: 'p3',
+        title: 'Using the Chat Section',
+        description:
+          'Communicate directly with teachers and school staff using the built-in chat feature. Learn how to start conversations and manage message notifications.',
+        driveId: '1eMOMGuGrI_fCgLv22XkKRnwg8HeK5IQn',
+        duration: '4:00',
+      },
+      {
+        id: 'pm3v3',
+        moduleId: 'p3',
+        title: 'Viewing Student Documents',
+        description:
+          'Access and download important student documents such as report cards, certificates, and official school records from the Parent Portal.',
+        driveId: '1jgB4U7UBZ9KIVw_MO2LD73RUwo-0z4db',
+        duration: '3:30',
+      },
+    ],
+  },
+]
+
+export const parentAllVideos = parentModules.flatMap((module) =>
+  module.videos.map((video) => ({ ...video, moduleTitle: module.title }))
+)
+
+export const getParentVideoById = (id) => parentAllVideos.find((v) => v.id === id)
+export const getParentModuleById = (id) => parentModules.find((m) => m.id === id)
+export const getParentTotalVideos = () => parentAllVideos.length
