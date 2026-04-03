@@ -1,13 +1,24 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 const BANNER_URL =
   'https://scontent.filo1-1.fna.fbcdn.net/v/t39.30808-6/480198983_1091607002762482_8548530664698558169_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeHXS60QWgmzv58HH859Fuxid4MKaE9Zd3V3gwpoT1l3dfmjVy1XpPuCS1Ny1pbpJG9_BldH9oHpdBjiX60bzFw9&_nc_ohc=B9LXIKclRMsQ7kNvwGljNIo&_nc_oc=AdoUnt4sTaRn29dT7E2nDKEK89MODWEWCeJsYhsGs2eXND0Gf3vuy1FnN9M6rEQS4y0&_nc_zt=23&_nc_ht=scontent.filo1-1.fna&_nc_gid=ulT6Wpw4CgPaIkAIPrqnSw&_nc_ss=7a3a8&oh=00_Afznot7HBtSLNWceYPwC6ZJfpfTol9MoHhJNykHli4O9Qg&oe=69D045F8'
 
+// Which roles may access each section.
+const ROLE_ACCESS = {
+  teacher: ['teacher', 'admin'],
+  parent:  ['parent',  'admin'],
+  admin:   ['admin'],
+}
+
 export default function HomePage() {
   const navigate = useNavigate()
-  const [showModal, setShowModal] = useState(null) // 'admin' | 'parent' | null
+  const { currentUser, userRole, logout } = useAuth()
   const [bannerError, setBannerError] = useState(false)
+
+  const canAccess = (key) =>
+    userRole && ROLE_ACCESS[key]?.includes(userRole)
 
   const roles = [
     {
@@ -15,45 +26,34 @@ export default function HomePage() {
       label: 'Teacher',
       icon: '👩‍🏫',
       description: 'Access SMAPS-SIS teacher tutorials and step-by-step video guides.',
-      cta: 'Get Started →',
-      available: true,
       path: '/teacher',
-      cardClass:
-        'bg-white border-2 border-transparent hover:border-yellow-400 hover:shadow-2xl hover:-translate-y-1 text-gray-800',
-      ctaClass: 'text-red-700 font-semibold',
     },
     {
       key: 'admin',
       label: 'Admin',
       icon: '👨‍💼',
       description: 'Administrative staff portal and system management tutorials.',
-      cta: 'Coming Soon 🔒',
-      available: false,
-      path: null,
-      cardClass:
-        'bg-white/10 border-2 border-white/20 hover:border-yellow-400/50 hover:shadow-xl hover:-translate-y-0.5 text-white',
-      ctaClass: 'text-yellow-400/70',
+      path: '/admin',
     },
     {
       key: 'parent',
       label: 'Parent',
       icon: '👨‍👩‍👧',
       description: 'Parent portal guides, how-to videos, and enrollment tutorials.',
-      cta: 'Get Started →',
-      available: true,
       path: '/parent',
-      cardClass:
-        'bg-white border-2 border-transparent hover:border-yellow-400 hover:shadow-2xl hover:-translate-y-1 text-gray-800',
-      ctaClass: 'text-red-700 font-semibold',
     },
   ]
 
   const handleSelect = (role) => {
-    if (role.available) {
+    if (canAccess(role.key)) {
       navigate(role.path)
-    } else {
-      setShowModal(role.key)
     }
+    // If locked, do nothing — the card shows a visual indicator
+  }
+
+  const handleLogout = async () => {
+    await logout()
+    navigate('/login', { replace: true })
   }
 
   return (
@@ -74,6 +74,41 @@ export default function HomePage() {
         <p className="text-red-200 mt-3 text-base md:text-lg font-medium">
           SMAPS-SIS Tutorial Portal
         </p>
+
+        {/* Signed-in user chip */}
+        {currentUser && (
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5">
+              {currentUser.photoURL ? (
+                <img src={currentUser.photoURL} alt="" className="w-5 h-5 rounded-full" />
+              ) : (
+                <div className="w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center text-red-900 text-xs font-bold select-none">
+                  {(currentUser.displayName || currentUser.email || '?')[0].toUpperCase()}
+                </div>
+              )}
+              <span className="text-white text-xs font-medium">
+                {currentUser.displayName || currentUser.email}
+              </span>
+              <span
+                className={`text-xs font-semibold px-1.5 py-0.5 rounded-full capitalize ${
+                  userRole === 'admin'   ? 'bg-red-400/30 text-red-200' :
+                  userRole === 'teacher' ? 'bg-blue-400/30 text-blue-200' :
+                  userRole === 'parent'  ? 'bg-green-400/30 text-green-200' :
+                                           'bg-yellow-400/30 text-yellow-200'
+                }`}
+              >
+                {userRole}
+              </span>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="text-white/50 hover:text-white/80 text-xs transition-colors"
+              title="Sign out"
+            >
+              Sign out
+            </button>
+          </div>
+        )}
       </header>
 
       {/* ── Banner Image ── */}
@@ -104,8 +139,9 @@ export default function HomePage() {
           Welcome to the SIS Tutorial Portal
         </h3>
         <p className="text-red-200 mt-2 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
-          Select your role below to access video tutorials and guides for the School Information
-          System. Learn at your own pace, anytime.
+          {userRole === 'admin'
+            ? 'You have full access to all sections and user management.'
+            : 'Your role determines which section you can access below.'}
         </p>
       </div>
 
@@ -115,54 +151,64 @@ export default function HomePage() {
           I am a…
         </p>
         <div className="max-w-3xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-4">
-          {roles.map((role) => (
-            <button
-              key={role.key}
-              onClick={() => handleSelect(role)}
-              className={`group rounded-2xl p-6 shadow-lg transition-all duration-300 text-left cursor-pointer ${role.cardClass}`}
-            >
-              <div className="text-4xl mb-3 select-none">{role.icon}</div>
-              <h3 className="font-bold text-xl mb-1">{role.label}</h3>
-              <p className={`text-sm leading-relaxed mb-4 ${role.available ? 'text-gray-500' : 'text-red-200'}`}>
-                {role.description}
-              </p>
-              <p className={`text-sm ${role.ctaClass} group-hover:underline`}>{role.cta}</p>
-            </button>
-          ))}
-        </div>
-      </div>
+          {roles.map((role) => {
+            const accessible = canAccess(role.key)
+            return (
+              <button
+                key={role.key}
+                onClick={() => handleSelect(role)}
+                disabled={!accessible}
+                className={`group rounded-2xl p-6 shadow-lg transition-all duration-300 text-left relative overflow-hidden ${
+                  accessible
+                    ? 'bg-white border-2 border-transparent hover:border-yellow-400 hover:shadow-2xl hover:-translate-y-1 text-gray-800 cursor-pointer'
+                    : 'bg-white/10 border-2 border-white/10 text-white/50 cursor-not-allowed'
+                }`}
+              >
+                {/* Lock badge for inaccessible cards */}
+                {!accessible && (
+                  <div className="absolute top-3 right-3 bg-white/10 rounded-full p-1">
+                    <svg className="w-4 h-4 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                )}
 
-      {/* ── Coming Soon Modal ── */}
-      {showModal && (
-        <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-          onClick={() => setShowModal(null)}
-        >
-          <div
-            className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="text-6xl mb-4 select-none">🚧</div>
-            <h3 className="text-2xl font-bold text-red-900 mb-2">Coming Soon!</h3>
-            <p className="text-gray-600 mb-1">
-              The{' '}
-              <span className="font-semibold text-red-800">
-                {showModal === 'admin' ? 'Admin' : 'Parent'}
-              </span>{' '}
-              portal is currently under development.
-            </p>
-            <p className="text-gray-400 text-sm mb-7">
-              We're working hard to bring this feature to you. Check back soon!
-            </p>
+                <div className={`text-4xl mb-3 select-none ${!accessible ? 'opacity-40' : ''}`}>
+                  {role.icon}
+                </div>
+                <h3 className={`font-bold text-xl mb-1 ${!accessible ? 'text-white/40' : ''}`}>
+                  {role.label}
+                </h3>
+                <p className={`text-sm leading-relaxed mb-4 ${
+                  accessible ? 'text-gray-500' : 'text-white/30'
+                }`}>
+                  {role.description}
+                </p>
+                <p className={`text-sm font-semibold ${
+                  accessible
+                    ? 'text-red-700 group-hover:underline'
+                    : 'text-white/30'
+                }`}>
+                  {accessible ? 'Get Started →' : 'No Access'}
+                </p>
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Admin panel shortcut */}
+        {userRole === 'admin' && (
+          <div className="text-center mt-6">
             <button
-              onClick={() => setShowModal(null)}
-              className="w-full bg-red-800 text-white font-semibold py-3 rounded-xl hover:bg-red-700 transition-colors"
+              onClick={() => navigate('/admin')}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-xl text-sm font-semibold transition-all duration-200"
             >
-              Got it!
+              🛡️ Open User Management
             </button>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* ── Footer ── */}
       <footer className="text-center pb-6 pt-4 text-red-400 text-xs">
@@ -199,7 +245,7 @@ export default function HomePage() {
                 className="w-full h-full object-cover mix-blend-multiply"
                 onError={(e) => {
                   e.target.style.display = 'none'
-                  e.target.parentElement.innerHTML = '<span class="w-full h-full flex items-center justify-center text-red-800 font-bold text-sm">SIS</span>'
+                  e.target.parentElement.innerHTML = '<span style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#991b1b;">SIS</span>'
                 }}
               />
             </div>
