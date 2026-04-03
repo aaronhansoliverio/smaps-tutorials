@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
-const ROLE_REDIRECTS = { admin: '/', teacher: '/teacher', parent: '/parent' }
 
 export default function LoginPage() {
   const { currentUser, userRole, loginWithGoogle, loginWithEmail, signupWithEmail, resetPassword } =
@@ -17,9 +16,9 @@ export default function LoginPage() {
   const [info, setInfo]         = useState('')
   const [busy, setBusy]         = useState(false)
 
-  // Already logged in → send to their dashboard.
+  // Already logged in → send to home or pending based on role
   if (currentUser) {
-    const dest = ROLE_REDIRECTS[userRole] ?? '/pending'
+    const dest = !userRole || userRole === 'pending' ? '/pending' : '/'
     return <Navigate to={dest} replace />
   }
 
