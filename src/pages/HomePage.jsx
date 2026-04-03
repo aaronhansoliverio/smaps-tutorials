@@ -27,6 +27,7 @@ export default function HomePage() {
       icon: '👩‍🏫',
       description: 'Access SMAPS-SIS teacher tutorials and step-by-step video guides.',
       path: '/teacher',
+      ready: true,
     },
     {
       key: 'admin',
@@ -34,6 +35,7 @@ export default function HomePage() {
       icon: '👨‍💼',
       description: 'Administrative staff portal and system management tutorials.',
       path: '/admin',
+      ready: false,  // Coming soon
     },
     {
       key: 'parent',
@@ -41,6 +43,7 @@ export default function HomePage() {
       icon: '👨‍👩‍👧',
       description: 'Parent portal guides, how-to videos, and enrollment tutorials.',
       path: '/parent',
+      ready: true,
     },
   ]
 
@@ -152,7 +155,8 @@ export default function HomePage() {
         </p>
         <div className="max-w-3xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-4">
           {roles.map((role) => {
-            const accessible = canAccess(role.key)
+            const accessible = canAccess(role.key) && role.ready
+            const locked = !role.ready
             return (
               <button
                 key={role.key}
@@ -164,8 +168,8 @@ export default function HomePage() {
                     : 'bg-white/10 border-2 border-white/10 text-white/50 cursor-not-allowed'
                 }`}
               >
-                {/* Lock badge for inaccessible cards */}
-                {!accessible && (
+                {/* Lock badge for locked/unavailable cards */}
+                {locked && (
                   <div className="absolute top-3 right-3 bg-white/10 rounded-full p-1">
                     <svg className="w-4 h-4 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -190,24 +194,13 @@ export default function HomePage() {
                     ? 'text-red-700 group-hover:underline'
                     : 'text-white/30'
                 }`}>
-                  {accessible ? 'Get Started →' : 'No Access'}
+                  {accessible ? 'Get Started →' : locked ? 'Coming Soon' : 'No Access'}
                 </p>
               </button>
             )
           })}
         </div>
 
-        {/* Admin panel shortcut */}
-        {userRole === 'admin' && (
-          <div className="text-center mt-6">
-            <button
-              onClick={() => navigate('/admin')}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-xl text-sm font-semibold transition-all duration-200"
-            >
-              🛡️ Open User Management
-            </button>
-          </div>
-        )}
       </div>
 
       {/* ── Footer ── */}
