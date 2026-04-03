@@ -36,7 +36,7 @@ export default function HomePage() {
       icon: '👨‍💼',
       description: 'Administrative staff portal and system management tutorials.',
       path: '/admin',
-      ready: false,  // Coming soon
+      ready: true,
     },
     {
       key: 'parent',
