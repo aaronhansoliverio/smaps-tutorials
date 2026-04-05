@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import {
   allVideos, modules, getVideoById,
   parentAllVideos, parentModules, getParentVideoById,
+  adminAllVideos, adminModules, getAdminVideoById,
 } from '../data/courseData'
 import Navbar from '../components/Navbar'
 
@@ -14,12 +15,21 @@ export default function VideoPlayer() {
 
   // Determine context from URL prefix
   const isParent = location.pathname.startsWith('/parent')
-  const storageKey = isParent ? 'smaps_parent_completed_videos' : 'smaps_completed_videos'
-  const dashboardPath = isParent ? '/parent' : '/teacher'
-  const videoPath = isParent ? '/parent/video/' : '/teacher/video/'
-  const contextVideos = isParent ? parentAllVideos : allVideos
-  const contextModules = isParent ? parentModules : modules
-  const getById = isParent ? getParentVideoById : getVideoById
+  const isAdminTutorials = location.pathname.startsWith('/admin-tutorials')
+  const storageKey = isAdminTutorials
+    ? 'smaps_admin_completed_videos'
+    : isParent
+    ? 'smaps_parent_completed_videos'
+    : 'smaps_completed_videos'
+  const dashboardPath = isAdminTutorials ? '/admin-tutorials' : isParent ? '/parent' : '/teacher'
+  const videoPath = isAdminTutorials
+    ? '/admin-tutorials/video/'
+    : isParent
+    ? '/parent/video/'
+    : '/teacher/video/'
+  const contextVideos = isAdminTutorials ? adminAllVideos : isParent ? parentAllVideos : allVideos
+  const contextModules = isAdminTutorials ? adminModules : isParent ? parentModules : modules
+  const getById = isAdminTutorials ? getAdminVideoById : isParent ? getParentVideoById : getVideoById
 
   const [completedVideos, setCompletedVideos] = useState(() => {
     const saved = localStorage.getItem(storageKey)

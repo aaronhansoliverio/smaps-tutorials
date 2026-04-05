@@ -92,14 +92,15 @@ export default function Navbar({ title, showBack, backTo, backLabel, dark = fals
                   </p>
                   <p className="text-gray-400 text-xs truncate">{currentUser.email}</p>
                   <span
-                    className={`inline-block mt-1.5 text-xs font-semibold px-2 py-0.5 rounded-full capitalize ${
+                    className={`inline-block mt-1.5 text-xs font-semibold px-2 py-0.5 rounded-full ${
+                      isSuperAdmin           ? 'bg-yellow-100 text-yellow-700' :
                       userRole === 'admin'   ? 'bg-red-100 text-red-700' :
                       userRole === 'teacher' ? 'bg-blue-100 text-blue-700' :
                       userRole === 'parent'  ? 'bg-green-100 text-green-700' :
                                                'bg-yellow-100 text-yellow-700'
                     }`}
                   >
-                    {userRole || 'pending'}
+                    {isSuperAdmin ? 'Super Admin' : (userRole || 'pending')}
                   </span>
                 </div>
 

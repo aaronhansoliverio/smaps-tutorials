@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage'
 import PendingPage from './pages/PendingPage'
 import TeacherDashboard from './pages/TeacherDashboard'
 import ParentDashboard from './pages/ParentDashboard'
+import AdminDashboard from './pages/AdminDashboard'
 import VideoPlayer from './pages/VideoPlayer'
 import AdminPanel from './pages/AdminPanel'
 
@@ -63,7 +64,25 @@ function App() {
           }
         />
 
-        {/* ── Admin section — Super admin only ── */}
+        {/* ── Admin tutorial section ── */}
+        <Route
+          path="/admin-tutorials"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-tutorials/video/:videoId"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <VideoPlayer />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ── User Management Panel — Super admin only ── */}
         <Route
           path="/admin"
           element={

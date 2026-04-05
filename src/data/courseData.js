@@ -269,3 +269,156 @@ export const parentAllVideos = parentModules.flatMap((module) =>
 export const getParentVideoById = (id) => parentAllVideos.find((v) => v.id === id)
 export const getParentModuleById = (id) => parentModules.find((m) => m.id === id)
 export const getParentTotalVideos = () => parentAllVideos.length
+
+// ============================================================
+//  ADMIN MODULES
+//  Google Drive Folder:
+//  https://drive.google.com/drive/folders/1tAUJy4Pwd3jnv918gJ0eguxsU6qrx7kw
+// ============================================================
+export const adminModules = [
+  {
+    id: 'a1',
+    title: 'Module 1: System Overview',
+    description:
+      'Get oriented with the SMAPS-SIS admin interface and understand the full scope of administrative tools available.',
+    icon: '🖥️',
+    headerColor: 'bg-red-800',
+    badgeColor: 'bg-yellow-100 text-red-800',
+    borderColor: 'border-red-200',
+    bgColor: 'bg-red-50',
+    videos: [
+      {
+        id: 'am1v1',
+        moduleId: 'a1',
+        title: 'Admin Dashboard',
+        description:
+          'A comprehensive overview of the SMAPS-SIS Admin Dashboard — learn the layout, key navigation areas, and how to quickly access the administrative features you need.',
+        driveId: '1G4vKl_JFJ9avZoXRhRVZ5cGr6DVe49fm',
+        duration: '5:00',
+      },
+    ],
+  },
+  {
+    id: 'a2',
+    title: 'Module 2: User & Access Management',
+    description:
+      'Manage system users including administrators, faculty, and student records within the SMAPS-SIS platform.',
+    icon: '👥',
+    headerColor: 'bg-blue-800',
+    badgeColor: 'bg-blue-100 text-blue-800',
+    borderColor: 'border-blue-200',
+    bgColor: 'bg-blue-50',
+    videos: [
+      {
+        id: 'am2v1',
+        moduleId: 'a2',
+        title: 'User Management',
+        description:
+          'Learn how to create, edit, and manage system user accounts — assign roles, reset credentials, and control access levels for all SMAPS-SIS users.',
+        driveId: '1fH9uC2pz3uS-DMClfPkC9EHw8PjfyHMy',
+        duration: '6:00',
+      },
+      {
+        id: 'am2v2',
+        moduleId: 'a2',
+        title: 'Faculty',
+        description:
+          'Manage faculty records including personal information, subject assignments, and teaching loads. Learn how to add new faculty members and update existing profiles.',
+        driveId: '1SZN-vvlzA0ibscJ-vYv_hadKHyyxeWL4',
+        duration: '5:30',
+      },
+      {
+        id: 'am2v3',
+        moduleId: 'a2',
+        title: 'Students',
+        description:
+          'Access and manage student records, enrollment status, and academic information. Learn how to search, filter, and update student profiles across all grade levels.',
+        driveId: '1lJDZbjvMMljlnTrfz6KcS8A7P9Av9KY_',
+        duration: '6:30',
+      },
+    ],
+  },
+  {
+    id: 'a3',
+    title: 'Module 3: School Configuration',
+    description:
+      'Configure school-wide settings and manage the enrollment process for new and returning students.',
+    icon: '⚙️',
+    headerColor: 'bg-purple-800',
+    badgeColor: 'bg-purple-100 text-purple-800',
+    borderColor: 'border-purple-200',
+    bgColor: 'bg-purple-50',
+    videos: [
+      {
+        id: 'am3v1',
+        moduleId: 'a3',
+        title: 'School Setup',
+        description:
+          'Configure core school settings including academic year setup, grading systems, section assignments, and other institution-wide preferences in SMAPS-SIS.',
+        driveId: '1biKyin13i3zmBz_Qijr2bho9Ci3sKF0g',
+        duration: '7:00',
+      },
+      {
+        id: 'am3v2',
+        moduleId: 'a3',
+        title: 'Enrollment',
+        description:
+          'Manage the student enrollment process from start to finish — process new enrollments, handle re-enrollment for returning students, and track enrollment status.',
+        driveId: '1ugEVbcW9CPUcjVKyT05Oj3SippL6N3B6',
+        duration: '8:00',
+      },
+    ],
+  },
+  {
+    id: 'a4',
+    title: 'Module 4: Financial Management',
+    description:
+      'Handle school accounting, fee collection, and financial reporting within the SMAPS-SIS system.',
+    icon: '💰',
+    headerColor: 'bg-green-800',
+    badgeColor: 'bg-green-100 text-green-800',
+    borderColor: 'border-green-200',
+    bgColor: 'bg-green-50',
+    videos: [
+      {
+        id: 'am4v1',
+        moduleId: 'a4',
+        title: 'Accounting',
+        description:
+          'Learn how to manage school finances including tuition fee setup, payment recording, billing statements, and generating financial summary reports.',
+        driveId: '1XqYWQnbPGcLguxbwhS8wLW09KWT1Y3x3',
+        duration: '9:00',
+      },
+    ],
+  },
+  {
+    id: 'a5',
+    title: 'Module 5: Monitoring & Outputs',
+    description:
+      'Generate reports and monitor school-wide data to support administrative decision-making.',
+    icon: '📊',
+    headerColor: 'bg-amber-700',
+    badgeColor: 'bg-amber-100 text-amber-800',
+    borderColor: 'border-amber-200',
+    bgColor: 'bg-amber-50',
+    videos: [
+      {
+        id: 'am5v1',
+        moduleId: 'a5',
+        title: 'Reports',
+        description:
+          'Access and generate a variety of administrative reports including enrollment summaries, academic performance overviews, attendance records, and financial statements.',
+        driveId: '15IFPIXX6cLusBxKui0oRE5hF8ZkIdZUC',
+        duration: '6:00',
+      },
+    ],
+  },
+]
+
+export const adminAllVideos = adminModules.flatMap((module) =>
+  module.videos.map((video) => ({ ...video, moduleTitle: module.title }))
+)
+
+export const getAdminVideoById = (id) => adminAllVideos.find((v) => v.id === id)
+export const getAdminModuleById = (id) => adminModules.find((m) => m.id === id)
+export const getAdminTotalVideos = () => adminAllVideos.length

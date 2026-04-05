@@ -5,8 +5,8 @@ import { useAuth } from '../contexts/AuthContext'
 const BANNER_URL =
   'https://scontent.filo1-1.fna.fbcdn.net/v/t39.30808-6/480198983_1091607002762482_8548530664698558169_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeHXS60QWgmzv58HH859Fuxid4MKaE9Zd3V3gwpoT1l3dfmjVy1XpPuCS1Ny1pbpJG9_BldH9oHpdBjiX60bzFw9&_nc_ohc=B9LXIKclRMsQ7kNvwGljNIo&_nc_oc=AdoUnt4sTaRn29dT7E2nDKEK89MODWEWCeJsYhsGs2eXND0Gf3vuy1FnN9M6rEQS4y0&_nc_zt=23&_nc_ht=scontent.filo1-1.fna&_nc_gid=ulT6Wpw4CgPaIkAIPrqnSw&_nc_ss=7a3a8&oh=00_Afznot7HBtSLNWceYPwC6ZJfpfTol9MoHhJNykHli4O9Qg&oe=69D045F8'
 
-// Which roles may access each section.
-// Note: admins are end-users who only access admin tutorials, not teacher/parent
+// Which roles may access each section (regular role check).
+// Super admins bypass this entirely via isSuperAdmin.
 const ROLE_ACCESS = {
   teacher: ['teacher'],
   parent:  ['parent'],
@@ -18,8 +18,9 @@ export default function HomePage() {
   const { currentUser, userRole, isSuperAdmin, logout } = useAuth()
   const [bannerError, setBannerError] = useState(false)
 
+  // Super admins can access every section; others check their role
   const canAccess = (key) =>
-    userRole && ROLE_ACCESS[key]?.includes(userRole)
+    isSuperAdmin || (userRole && ROLE_ACCESS[key]?.includes(userRole))
 
   const roles = [
     {
@@ -35,8 +36,8 @@ export default function HomePage() {
       label: 'Admin',
       icon: '👨‍💼',
       description: 'Administrative staff portal and system management tutorials.',
-      path: '/admin',
-      ready: false,  // Coming soon - tutorials not created yet
+      path: '/admin-tutorials',
+      ready: true,
     },
     {
       key: 'parent',
@@ -94,14 +95,15 @@ export default function HomePage() {
                 {currentUser.displayName || currentUser.email}
               </span>
               <span
-                className={`text-xs font-semibold px-1.5 py-0.5 rounded-full capitalize ${
+                className={`text-xs font-semibold px-1.5 py-0.5 rounded-full ${
+                  isSuperAdmin           ? 'bg-yellow-400/30 text-yellow-200' :
                   userRole === 'admin'   ? 'bg-red-400/30 text-red-200' :
                   userRole === 'teacher' ? 'bg-blue-400/30 text-blue-200' :
                   userRole === 'parent'  ? 'bg-green-400/30 text-green-200' :
                                            'bg-yellow-400/30 text-yellow-200'
                 }`}
               >
-                {userRole}
+                {isSuperAdmin ? 'Super Admin' : userRole}
               </span>
             </div>
             <button
@@ -152,7 +154,7 @@ export default function HomePage() {
           Welcome to the SIS Tutorial Portal
         </h3>
         <p className="text-red-200 mt-2 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
-          {userRole === 'admin'
+          {isSuperAdmin
             ? 'You have full access to all sections and user management.'
             : 'Your role determines which section you can access below.'}
         </p>

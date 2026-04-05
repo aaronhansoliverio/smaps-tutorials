@@ -27,6 +27,11 @@ export default function ProtectedRoute({ children, allowedRoles, requireSuperAdm
     return <Navigate to="/" replace />
   }
 
+  // Super admin bypasses all role restrictions — full access
+  if (isSuperAdmin) {
+    return children
+  }
+
   if (!allowedRoles.includes(userRole)) {
     return <Navigate to="/" replace />
   }
