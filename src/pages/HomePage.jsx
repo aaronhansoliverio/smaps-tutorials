@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
 const BANNER_URL =
-  'https://scontent.filo1-1.fna.fbcdn.net/v/t39.30808-6/480198983_1091607002762482_8548530664698558169_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeHXS60QWgmzv58HH859Fuxid4MKaE9Zd3V3gwpoT1l3dfmjVy1XpPuCS1Ny1pbpJG9_BldH9oHpdBjiX60bzFw9&_nc_ohc=B9LXIKclRMsQ7kNvwGljNIo&_nc_oc=AdoUnt4sTaRn29dT7E2nDKEK89MODWEWCeJsYhsGs2eXND0Gf3vuy1FnN9M6rEQS4y0&_nc_zt=23&_nc_ht=scontent.filo1-1.fna&_nc_gid=ulT6Wpw4CgPaIkAIPrqnSw&_nc_ss=7a3a8&oh=00_Afznot7HBtSLNWceYPwC6ZJfpfTol9MoHhJNykHli4O9Qg&oe=69D045F8'
+  'https://scontent.fceb2-2.fna.fbcdn.net/v/t39.30808-6/480198983_1091607002762482_8548530664698558169_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeHXS60QWgmzv58HH859Fuxid4MKaE9Zd3V3gwpoT1l3dfmjVy1XpPuCS1Ny1pbpJG9_BldH9oHpdBjiX60bzFw9&_nc_ohc=GI_E_EEGRAEQ7kNvwFL9gCa&_nc_oc=AdoNxKFdvvu-uPoOPGIZxIjACjMdIa-sK88Fkt7BwdSFB6E7lcofIY6jKtj3klegmgw&_nc_zt=23&_nc_ht=scontent.fceb2-2.fna&_nc_gid=1TH6xEiWQTaxmYw_O455nw&_nc_ss=7a3a8&oh=00_Af2q5E-dh55-tJyS8kpYOy0d_Mfnul0QcbJYD2dKfw07Ag&oe=69DB7AB8'
 
 // Which roles may access each section (regular role check).
 // Super admins bypass this entirely via isSuperAdmin.
