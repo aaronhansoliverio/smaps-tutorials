@@ -154,8 +154,8 @@ smaps-tutorials/
 | Previous / Next video navigation | ✅ |
 | Collapsible transcript per video | ✅ |
 | Responsive sidebar (desktop + mobile) | ✅ |
-| Admin portal | 🔜 Coming soon |
-| Parent portal | 🔜 Coming soon |
+| Admin portal | ✅ |
+| Parent portal | ✅ |
 
 ---
 
